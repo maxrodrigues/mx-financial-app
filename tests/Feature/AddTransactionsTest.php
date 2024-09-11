@@ -19,3 +19,17 @@ it('should be add new transaction', function () {
     assertDatabaseCount('transactions', 1);
     $response->assertStatus(\Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
 });
+
+it('should be validate attributes to store a transaction', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $response = $this->post(route('transactions.store'), []);
+
+    $response->assertSessionHasErrors([
+        'type',
+        'amount',
+        'transaction_at',
+        'description',
+    ]);
+});
