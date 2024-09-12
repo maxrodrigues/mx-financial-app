@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 class Transaction extends Model
 {
+    use SoftDeletes;
+
     /**
      * @use HasFactory<TransactionFactory>
      */
-    use SoftDeletes;
     use HasFactory;
 
     protected $fillable = [
