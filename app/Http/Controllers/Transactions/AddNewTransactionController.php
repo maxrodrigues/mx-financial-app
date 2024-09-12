@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Transactions;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transactions\AddNewTransactionRequest;
-use App\Models\Transactions;
+use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ class AddNewTransactionController extends Controller
     {
         try {
             $data = $request->validated();
-            Transactions::create($data);
+            Transaction::create($data);
 
             return new JsonResponse([
                 'message' => 'Transaction added successfully.',
