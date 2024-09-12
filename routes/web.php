@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('transactions', \App\Http\Controllers\Transactions\AddNewTransactionController::class)->name('transactions.store');
+    Route::put('transactions/{transaction}', \App\Http\Controllers\Transactions\UpdateTransactionController::class)->name('transactions.update');
 });
 
 require __DIR__ . '/auth.php';
