@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Wallets;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\{RedirectResponse, Request};
+use App\Http\Requests\Wallets\AddWalletRequest;
+use Illuminate\Http\{RedirectResponse};
 use Illuminate\Support\Facades\Auth;
 
 class AddWalletController extends Controller
 {
-    public function __invoke(Request $request): RedirectResponse
+    public function __invoke(AddWalletRequest $request): RedirectResponse
     {
         try {
             Auth::user()

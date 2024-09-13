@@ -11,8 +11,8 @@ return new class () extends Migration {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('balance');
-            $table->boolean('is_active');
+            $table->integer('balance')->default(0)->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->foreignIdFor(User::class)->constrained('users');
             $table->timestamps();
             $table->softDeletes();
