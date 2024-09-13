@@ -43,3 +43,17 @@ it('should be show message error when wallet name has minimum 5 characters', fun
             'name' => __('validation.min.string', ['attribute' => 'name', 'min' => 5]),
         ]);
 });
+
+it('should be show message error when wallet name has maximum 255 characters', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $attributes = [
+        'name' => str_repeat('*', 256),
+    ];
+
+    $this->post(route('wallets.store'), $attributes)
+        ->assertSessionHasErrors([
+            'name' => __('validation.max.string', ['attribute' => 'name', 'max' => 255]),
+        ]);
+});

@@ -22,7 +22,7 @@ class AddWalletRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'      => 'required|string|min:5',
+            'name'      => 'required|string|min:5|max:255',
             'balance'   => 'sometimes|numeric',
             'is_active' => 'sometimes|boolean',
         ];
