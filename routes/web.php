@@ -23,6 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::post('transactions', AddNewTransactionController::class)->name('transactions.store');
     Route::put('transactions/{transaction}', UpdateTransactionController::class)->name('transactions.update');
     Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+
+    Route::group(['prefix' => 'wallets', 'as' => 'wallets.'], function () {
+        Route::get('/', [\App\Http\Controllers\Wallets\WalletController::class, 'index'])->name('index');
+        Route::post('/', \App\Http\Controllers\Wallets\AddWalletController::class)->name('store');
+    });
 });
 
 require __DIR__ . '/auth.php';
