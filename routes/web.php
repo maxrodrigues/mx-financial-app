@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Transactions\{AddNewTransactionController, TransactionController, UpdateTransactionController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('transactions', function () {
         return 'hello world';
     })->name('transactions.index');
-    Route::post('transactions', \App\Http\Controllers\Transactions\AddNewTransactionController::class)->name('transactions.store');
-    Route::put('transactions/{transaction}', \App\Http\Controllers\Transactions\UpdateTransactionController::class)->name('transactions.update');
-    Route::delete('transactions/{transaction}', [\App\Http\Controllers\Transactions\TransactionController::class, 'destroy'])->name('transactions.destroy');
+    Route::post('transactions', AddNewTransactionController::class)->name('transactions.store');
+    Route::put('transactions/{transaction}', UpdateTransactionController::class)->name('transactions.update');
+    Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 });
 
 require __DIR__ . '/auth.php';
