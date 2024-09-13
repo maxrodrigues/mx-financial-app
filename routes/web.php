@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'wallets', 'as' => 'wallets.'], function () {
         Route::get('/', [\App\Http\Controllers\Wallets\WalletController::class, 'index'])->name('index');
         Route::post('/', \App\Http\Controllers\Wallets\AddWalletController::class)->name('store');
+        Route::put('/{wallet}', \App\Http\Controllers\Wallets\UpdateWalletController::class)->name('update');
     });
 });
 
