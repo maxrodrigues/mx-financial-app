@@ -13,3 +13,15 @@ it('should be create a new credit card', function () {
 
     \Pest\Laravel\assertDatabaseCount('cards', 1);
 });
+
+it('should be validate attributes to create a new card', function () {
+    $user = \App\Models\User::factory()->create();
+    \Pest\Laravel\actingAs($user);
+
+    $this->post(route('card.store'), [])
+        ->assertSessionHasErrors([
+            'name',
+            'bank',
+            'limit',
+        ]);
+});
