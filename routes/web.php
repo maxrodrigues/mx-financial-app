@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Transactions\{AddNewTransactionController, TransactionController, UpdateTransactionController};
+use App\Http\Controllers\Wallets\{AddWalletController, UpdateWalletController, WalletController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,9 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 
     Route::group(['prefix' => 'wallets', 'as' => 'wallets.'], function () {
-        Route::get('/', [\App\Http\Controllers\Wallets\WalletController::class, 'index'])->name('index');
-        Route::post('/', \App\Http\Controllers\Wallets\AddWalletController::class)->name('store');
-        Route::put('/{wallet}', \App\Http\Controllers\Wallets\UpdateWalletController::class)->name('update');
+        Route::get('/', [WalletController::class, 'index'])->name('index');
+        Route::post('/', AddWalletController::class)->name('store');
+        Route::put('/{wallet}', UpdateWalletController::class)->name('update');
     });
 });
 
