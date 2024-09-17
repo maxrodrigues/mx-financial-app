@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Transaction;
+use App\Models\{Transaction, Wallet};
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
@@ -12,6 +12,7 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
+            'wallet_id'      => Wallet::factory(),
             'description'    => $this->faker->words(4, true),
             'amount'         => $this->faker->numberBetween(100, 10000),
             'transaction_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
