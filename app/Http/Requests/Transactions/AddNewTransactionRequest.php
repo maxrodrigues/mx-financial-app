@@ -22,6 +22,7 @@ class AddNewTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'wallet_id'      => 'required|exists:wallets,id',
             'type'           => 'required|in:debit,credit',
             'amount'         => 'required|numeric',
             'transaction_at' => 'required|date',

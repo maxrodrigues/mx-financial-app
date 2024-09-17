@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\{Model, Relations\BelongsTo, SoftDeletes};
 
 class Transaction extends Model
 {
@@ -16,6 +16,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'wallet_id',
         'type',
         'amount',
         'description',
@@ -32,4 +33,13 @@ class Transaction extends Model
             'transaction_at' => 'datetime',
         ];
     }
+
+    /**
+     * @return BelongsTo<Wallet, Transaction>
+     */
+    public function wallet(): BelongsTo
+    {
+        return $this->belongsTo(Wallet::class);
+    }
+
 }
