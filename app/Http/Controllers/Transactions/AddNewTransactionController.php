@@ -5,24 +5,22 @@ namespace App\Http\Controllers\Transactions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transactions\AddNewTransactionRequest;
 use App\Models\Transaction;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\{RedirectResponse};
+use Illuminate\Support\Arr;
 
 class AddNewTransactionController extends Controller
 {
-    public function __invoke(AddNewTransactionRequest $request): JsonResponse
+    public function __invoke(AddNewTransactionRequest $request): RedirectResponse
     {
         try {
-            $data = $request->validated();
-            Transaction::create($data);
+            $user = getLoggedUser();
+            $attr = Arr::add($request->validated(), 'user_id', $user['id']);
 
-            return new JsonResponse([
-                'message' => 'Transaction added successfully.',
-            ], Response::HTTP_CREATED);
+            Transaction::create($attr);
+
+            return redirect()->route('transactions.index');
         } catch (\Exception $e) {
-            return new JsonResponse([
-                'message' => $e->getMessage(),
-            ], Response::HTTP_BAD_REQUEST);
+            return redirect()->route('transactions.index');
         }
     }
 }

@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use Database\Factories\CardFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\{Factories\HasFactory, Model, SoftDeletes};
 
 class Card extends Model
 {
     use SoftDeletes;
+
+    /**
+     * @use HasFactory<CardFactory>
+     */
+    use HasFactory;
 
     protected $fillable = [
         'name',
