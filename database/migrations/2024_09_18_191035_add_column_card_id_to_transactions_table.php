@@ -8,10 +8,10 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->foreignId('wallet_id')
-                ->after('id')
+            $table->foreignId('card_id')
+                ->after('wallet_id')
                 ->nullable()
-                ->constrained('wallets')
+                ->constrained('cards')
                 ->cascadeOnDelete();
         });
     }

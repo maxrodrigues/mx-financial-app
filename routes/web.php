@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Card\AddNewCardController;
+use App\Http\Controllers\Card\{AddNewCardController, CardController};
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Transactions\{AddNewTransactionController, TransactionController, UpdateTransactionController};
 use App\Http\Controllers\Wallets\{AddWalletController, UpdateWalletController, WalletController};
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::group(['prefix' => 'card', 'as' => 'card.'], function () {
-        Route::get('/', [\App\Http\Controllers\Card\CardController::class, 'index'])->name('index');
+        Route::get('/', [CardController::class, 'index'])->name('index');
         Route::post('/', AddNewCardController::class)->name('store');
     });
 });
