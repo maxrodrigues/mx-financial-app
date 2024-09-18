@@ -16,6 +16,11 @@ class AddNewTransactionController extends Controller
             $user = getLoggedUser();
             $attr = Arr::add($request->validated(), 'user_id', $user['id']);
 
+            if (!empty($attr['credit_id']) && $attr['type'] === 'credit') {
+                // skip test to refine writing
+                return redirect()->route('transactions.index');
+            }
+
             Transaction::create($attr);
 
             return redirect()->route('transactions.index');

@@ -91,4 +91,21 @@ it('should transaction must belong to card', function () {
     assertDatabaseCount('transactions', 1);
 });
 
-todo('should card transaction must be only debit');
+//skip test to refine writing
+it('should card transaction must be only debit', function () {
+    $user = User::factory()->create();
+    $card = Card::factory()
+        ->for($user)
+        ->create();
+
+    actingAs($user);
+
+    $this->post(route('transactions.store'), [
+        'card_id'        => $card->id,
+        'type'           => 'debit',
+        'amount'         => 1000,
+        'transaction_at' => '2024-10-10',
+        'description'    => 'Test transaction',
+        'observation'    => 'Test observation',
+    ]);
+})->skip();
