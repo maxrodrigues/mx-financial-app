@@ -109,3 +109,73 @@ it('should card transaction must be only debit', function () {
         'observation'    => 'Test observation',
     ]);
 })->skip();
+
+test('must deduct the wallet value when adding a transaction', function () {
+    $user   = User::factory()->create();
+    $wallet = Wallet::factory()
+        ->for($user)
+        ->create();
+
+    actingAs($user);
+
+    $response = $this->post(route('transactions.store'), [
+        'wallet_id'      => $wallet->id,
+        'type'           => 'debit',
+        'amount'         => 1000,
+        'transaction_at' => '2024-10-10',
+        'description'    => 'Test transaction',
+        'observation'    => 'Test observation',
+    ]);
+
+    \Pest\Laravel\assertDatabaseHas('wallets', [
+        'balance' => $wallet->balance - 1000,
+    ]);
+});
+
+test('must add the transaction amount when it is a credit type', function () {
+    $user   = User::factory()->create();
+    $wallet = Wallet::factory()
+        ->for($user)
+        ->create();
+
+    actingAs($user);
+
+    $response = $this->post(route('transactions.store'), [
+        'wallet_id'      => $wallet->id,
+        'type'           => 'credit',
+        'amount'         => 1000,
+        'transaction_at' => '2024-10-10',
+        'description'    => 'Test transaction',
+        'observation'    => 'Test observation',
+    ]);
+
+    \Pest\Laravel\assertDatabaseHas('wallets', [
+        'balance' => $wallet->balance + 1000,
+    ]);
+});
+
+it('should wallet keep your balance when transaction is credit card type', function () {
+    $user   = User::factory()->create();
+    $wallet = Wallet::factory()
+        ->for($user)
+        ->create();
+
+    $card = Card::factory()
+        ->for($user)
+        ->create();
+
+    actingAs($user);
+
+    $response = $this->post(route('transactions.store'), [
+        'card_id'        => $card->id,
+        'type'           => 'credit',
+        'amount'         => 1000,
+        'transaction_at' => '2024-10-10',
+        'description'    => 'Test transaction',
+        'observation'    => 'Test observation',
+    ]);
+
+    \Pest\Laravel\assertDatabaseHas('wallets', [
+        'balance' => $wallet->balance,
+    ]);
+});
